@@ -21,6 +21,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_admin',
+        'is_revisor',
+        'is_writer',
     ];
     /**
      * The attributes that should be hidden for serialization.
@@ -42,7 +45,10 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
     
+    //Questa funzione restituisce una collection di articoli collegato all'utente
     public function articles(){
+        //$this vuol dire dell'oggetto che sto prendendo in considerazione cioè l'utente
+        //Dell'oggetto utente creato chiama la funzione hasMany
         return $this->hasMany(Article::class);
     }
 }

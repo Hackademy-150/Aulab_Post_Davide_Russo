@@ -14,6 +14,7 @@ class Category extends Model
 
     protected $fillable = ['name'];
 
+    //Questa funzione non fa altro che restituire una collection di articoli collegati alla categoria
     public function articles(){
         return $this->hasMany(Article::class);
     }

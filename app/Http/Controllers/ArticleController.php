@@ -29,13 +29,15 @@ return view ('article.by-user' , compact('user' , 'articles'));
     public function byCategory(Category $category)
     {
         $articles = $category->articles()->orderby('created_at' , 'desc')->get();
-        return view ('article-by-category' , compact('category' , 'articles'));
+        return view ('article.by-category' , compact('category' , 'articles'));
     }
 
     public function byUser(User $user)
     {
-        $users = $user->users()->orderby('created_at' , 'user')->get();
-        return view ('user-by-user' , compact('user' , 'articles'));
+        $articles = $user->articles()->orderby('created_at' , 'desc')->get();
+        //se troviamo una compact come parametro della funzione view vuol dire che stiamo passando i dati alla vista
+        //dello specifico stiamo mandando uno user e la COLLEZIONE di articoli
+        return view ('article.by-user' , compact('user' , 'articles'));
     }
 
 
