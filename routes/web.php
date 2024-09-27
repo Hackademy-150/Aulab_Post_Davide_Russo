@@ -24,3 +24,8 @@ Route::get('/article/category/{category}' , [ArticleController::class, 'byCatego
 Route::get('/article/user/{user}' , [ArticleController::class, 'byUser'])->name('article.byUser');
 Route::get('/careers' , [PublicController::class , 'careers'])->name('careers');
 Route::post('/careers/submit' , [PublicController::class , 'careersSubmit'])->name('careers.submit');
+
+
+Route::middlewere('admin')->group(function(){
+    Route::get('/admin/dashboard' , [AdminController::class , 'dashboard'])->name('admin.dashboard');
+});
