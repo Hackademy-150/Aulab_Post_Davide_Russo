@@ -7,7 +7,7 @@
         </div>
     </div>
     <div class="container my-5">
-        <div class="row justify-content-center align-items-center border-rounded p-2 shadow">
+        <div class="row justify-content-center align-items-center border-rounded p-5 shadow">
             <div class="col-12 col-md-6">  
                 <h2>Lavora come amministratore</h2>
                 <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugit dolorem iste, inventore dolor explicabo facilis, pariatur animi nulla perspiciatis autem optio laboriosam veniam repellat nisi quos quaerat, molestias aliquam culpa.</p>
@@ -16,7 +16,7 @@
                 <h2>Lavora come redattore</h2>
                 <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Repellendus, consequuntur amet fugiat dolorum aut odit rem? Ullam culpa sapiente dolorem magni quia nulla tenetur deserunt perspiciatis consequuntur suscipit? Commodi, illo.</p>
             </div>
-            <div class="col-12 col-md-8">
+            <div class="col-12 col-md-6">
                 @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>

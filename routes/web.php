@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\ArticleController;
 
@@ -26,6 +27,6 @@ Route::get('/careers' , [PublicController::class , 'careers'])->name('careers');
 Route::post('/careers/submit' , [PublicController::class , 'careersSubmit'])->name('careers.submit');
 
 
-Route::middlewere('admin')->group(function(){
+Route::middleware('admin')->group(function(){
     Route::get('/admin/dashboard' , [AdminController::class , 'dashboard'])->name('admin.dashboard');
 });
