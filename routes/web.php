@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\RevisorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,5 +29,15 @@ Route::post('/careers/submit' , [PublicController::class , 'careersSubmit'])->na
 
 
 Route::middleware('admin')->group(function(){
-    Route::get('/admin/dashboard' , [AdminController::class , 'dashboard'])->name('admin.dashboard');
+Route::get('/admin/dashboard' , [AdminController::class , 'dashboard'])->name('admin.dashboard');
+Route::patch('/admin/{user}/set-admin' , [AdminController::class , 'setAdmin'])->name('admin.setAdmin');
+Route::patch('/admin/{user}/set-revisor'  , [ArticleController::class ,'setRevisor'])->name('adminsetRevisor');
+Route::patch('/admin/{user}/set-writer'  , [ArticleController::class ,'setWriter'])->name('adminsetWriter');
+});
+
+Route::middleware('revisor')->group(function(){
+    Route::get('/admin/dashboard' , [RevisorController::class , 'dashboard'])->name('admin.dashboard');
+    Route::post('/revisor/{article}/accept' , [RevisorController::class , 'acceptArticle'])->name('revisor.acceptArticle');
+    Route::post('/revisor/{article}/reject' , [RevisorController::class , 'rejectArticle'])->name('revisor.rejectArticle');
+    Route::post('/revisor/{article}/undo' , [RevisorController::class , 'undoArticle'])->name('revisor.undoArticle');
 });
