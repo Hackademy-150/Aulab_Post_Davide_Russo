@@ -14,7 +14,7 @@
                     <td>{{ $user->name}}</td>
                     <td>{{ $user->email}}</td>
                     <td>
-                        @switch()
+                        @switch($role)
                             @case('amministratore')
                             <form action="{{ route('admin.setAdmin' , compact('user'))}}" method="POST">
                                 @csrf

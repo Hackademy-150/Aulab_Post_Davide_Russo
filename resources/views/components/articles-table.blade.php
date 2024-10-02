@@ -13,7 +13,7 @@
         <tr>
             <th scope="row">{{ $article->id}}</th>
             <td>{{ $article->title}}</td>
-            <td>{{ $articles->subtitle }}</td>
+            <td>{{ $article->subtitle }}</td>
             <td>{{ $article->user->name }}</td>
             <td>
                 @if (is_null($article->is_accepted))
