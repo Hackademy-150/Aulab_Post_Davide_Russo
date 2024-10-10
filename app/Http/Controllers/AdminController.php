@@ -12,7 +12,7 @@ class AdminController extends Controller
         $revisorRequest = User::where('is_admin' , NULL)->get();
         $writerRequest = User::where('is_writer' , NULL)->get();
 
-        return view('admin.dashboard' , compact('adminRequest' , ' revisorRequest' , 'writerRequest'));
+        return view('admin.dashboard' , compact('adminRequest' , 'revisorRequest' , 'writerRequest'));
     }
 
     public function setAdmin(User $user){

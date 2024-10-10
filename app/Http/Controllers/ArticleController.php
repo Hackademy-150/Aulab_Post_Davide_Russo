@@ -20,6 +20,13 @@ class ArticleController extends Controller
         return view('article.index' , compact('articles'));
     }
 
+    public function articleSearch(Request $request){
+        $query = $request->input('query');
+        $articles = Article::search($query)->where('is_accepted' , true)->orderby('created_at' , 'desc')->get();
+
+        return view('article.search-index' , compact('articles' , 'query'));
+    }
+
     public function byRedactor(User $user){
 $articles = $user->articles()->orderby('created_at' , 'desc')->get();
 return view ('article.by-user' , compact('user' , 'articles'));
