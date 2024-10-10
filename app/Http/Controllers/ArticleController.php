@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tag;
 use App\Models\User;
 use App\Models\Article;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use PhpParser\Node\Stmt\Foreach_;
 use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
@@ -69,6 +71,7 @@ return view ('article.by-user' , compact('user' , 'articles'));
             'subtitle'=> 'required|min:5',
             'image' => 'image|required',
             'category'=> 'required',
+            'tags' => 'required',
 
         ]);
 
@@ -80,7 +83,20 @@ return view ('article.by-user' , compact('user' , 'articles'));
             'category_id'=> $request->category,
             'user_id' => Auth::user()->id,
         ]);
+        
+        $tags = explode(',' , $request->tags);
 
+        foreach ($tags as $i => $tag) {
+            $tags[$i] =trim($tag);
+        }
+
+        foreach ($tags as $tag) {
+            $newTag = Tag::updateOrCreate(
+                ['name' => $tag],
+                ['name' => strtolower($tag)],
+            );
+            $article->tags()->attach($newTag);
+        }
         return redirect(route('homepage'))->with('message' , 'Articolo creato correttamente');
     }
 
