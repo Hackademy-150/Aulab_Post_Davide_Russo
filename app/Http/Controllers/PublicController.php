@@ -33,7 +33,7 @@ public function careersSubmit(Request $request){
     $user = Auth::user();
     $role = $request->role;
     $email = $request->email;
-    $messaage = $request->message;
+    $message = $request->message;
     Mail::to('admin@theaulabpost.it')->send(new CareerRequestMail(compact('role' , 'email' , 'message')));
 
     switch($role){
