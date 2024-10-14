@@ -22,26 +22,26 @@ class ArticleController extends Controller
         $articles = Article::where('is_accepted' , true)->orderBy('created_at' , 'desc')->get();
         return view('article.index' , compact('articles'));
     }
-
+    
     public function articleSearch(Request $request){
         $query = $request->input('query');
         $articles = Article::search($query)->where('is_accepted' , true)->orderby('created_at' , 'desc')->get();
-
+        
         return view('article.search-index' , compact('articles' , 'query'));
     }
-
+    
     public function byRedactor(User $user){
-$articles = $user->articles()->orderby('created_at' , 'desc')->get();
-return view ('article.by-user' , compact('user' , 'articles'));
-
+        $articles = $user->articles()->orderby('created_at' , 'desc')->get();
+        return view ('article.by-user' , compact('user' , 'articles'));
+        
     }
-
+    
     public function byCategory(Category $category)
     {
         $articles = $category->articles()->where('is_accepted' , true)->orderby('created_at' , 'desc')->get();
         return view ('article.by-category' , compact('category' , 'articles'));
     }
-
+    
     public function byUser(User $user)
     {
         $articles = $user->articles()->orderby('created_at' , 'desc')->get();
@@ -49,20 +49,20 @@ return view ('article.by-user' , compact('user' , 'articles'));
         //dello specifico stiamo mandando uno user e la COLLEZIONE di articoli
         return view ('article.by-user' , compact('user' , 'articles'));
     }
-
-
+    
+    
     /**
-     * Show the form for creating a new resource.
-     */
+    * Show the form for creating a new resource.
+    */
     public function create()
     {
         $categories = Category::all();
         return view('article.create', ['categories' => $categories]);
     }
-
+    
     /**
-     * Store a newly created resource in storage.
-     */
+    * Store a newly created resource in storage.
+    */
     public function store(Request $request)
     {
         $request->validate([
@@ -73,9 +73,9 @@ return view ('article.by-user' , compact('user' , 'articles'));
             'image' => 'image|required',
             'category'=> 'required',
             'tags' => 'required',
-
+            
         ]);
-
+        
         $article = Article::create([
             'title'=> $request->title,
             'subtitle'=> $request->subtitle,
@@ -85,41 +85,47 @@ return view ('article.by-user' , compact('user' , 'articles'));
             'user_id' => Auth::user()->id,
         ]);
         
-        $tags = explode(',' , $request->tags);
-
-        foreach ($tags as $i => $tag) {
-            $tags[$i] =trim($tag);
+        $tags = explode(',', $request->tags);
+        
+        foreach($tags as $i => $tag){
+            $tags[$i] = trim($tag);
         }
-
-        foreach ($tags as $tag) {
+        
+        // trim con array_map
+        // $tags = array_map(function($tag){
+        //     return trim($tag);
+        // }, $tags);
+        
+        foreach($tags as $tag){
             $newTag = Tag::updateOrCreate(
                 ['name' => $tag],
-                ['name' => strtolower($tag)],
+                ['name' => strtolower($tag)]
             );
             $article->tags()->attach($newTag);
         }
+        
         return redirect(route('homepage'))->with('message' , 'Articolo creato correttamente');
     }
-
+    
     /**
-     * Display the specified resource.
-     */
+    * Display the specified resource.
+    */
     public function show(Article $article)
     {
         return view('article.show' , compact('article'));
     }
-
+    
     /**
-     * Show the form for editing the specified resource.
-     */
+    * Show the form for editing the specified resource.
+    */
     public function edit(Article $article)
     {
         return view('article.edit' , compact('article'));
     }
-
+    
     /**
-     * Update the specified resource in storage.
-     */
+    * Update the specified resource in storage.
+    */
     public function update(Request $request, Article $article)
     {
         $request->validate([
@@ -130,9 +136,9 @@ return view ('article.by-user' , compact('user' , 'articles'));
             'image' => 'image',
             'category'=> 'required',
             'tags' => 'required',
-
+            
         ]);
-
+        
         $article->update([
             'title'=> $request->title,
             'subtitle'=> $request->subtitle,
@@ -146,36 +152,41 @@ return view ('article.by-user' , compact('user' , 'articles'));
             ]);
         }
         
-        $tags = explode(',' , $request->tags);
-
-        foreach ($tags as $i => $tag) {
-            $tags[$i] =trim($tag);
+        $tags = explode(',', $request->tags);
+        
+        foreach($tags as $i => $tag){
+            $tags[$i] = trim($tag);
         }
-
-$newTags = [];
-        foreach ($tags as $tag) {
+        
+        // trim con array_map
+        // $tags = array_map(function($tag){
+        //     return trim($tag);
+        // }, $tags);
+        
+        foreach($tags as $tag){
             $newTag = Tag::updateOrCreate(
                 ['name' => $tag],
-                ['name' => strtolower($tag)],
+                ['name' => strtolower($tag)]
             );
-            $newTags[] = $newTag->id;
+            $article->tags()->attach($newTag);
         }
+        
         return redirect(route('writer.dashboard'))->with('message' , 'Hai correttamente aggiornato l\'articolo scelto');
         $article->tags->sync($newTag);
     }
-
+    
     /**
-     * Remove the specified resource from storage.
-     */
+    * Remove the specified resource from storage.
+    */
     public function destroy(Article $article)
     {
         foreach ($article->tags as $tag) {
             $article->tags()->detach($tag);
         }
-
+        
         $article->delete();
-
+        
         return redirect(route('writer.dashboard'))->with('message' , 'Hai correttamente cancellato l\'articolo scelto');
-
+        
     }
 }

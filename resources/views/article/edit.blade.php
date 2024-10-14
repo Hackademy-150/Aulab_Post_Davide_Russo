@@ -33,7 +33,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="tags" class="form-label">Tags:</label>
-                    <input  name="tags" class="form-control" id="tags" value="{{ $article->tags->implode('name' , ',' , '')}}"> 
+                    <input name="tags" id="tags" class="form-control" value="{{$article->tags->implode('name', ', ')}}">
                     <span class="small fst-italic">Dividi ogni tag con una virgola</span>
                 </div>
                 <div class="mb-3">
@@ -53,7 +53,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="body" class="form-label">Corpo del testo:</label>
-                    <textarea name="body" id="body" cols="30" rows="7" class="form-control">{{ old('body')}}</textarea>
+                    <textarea name="body" id="body" cols="30" rows="7" class="form-control">{{$article->body}}</textarea>
                 </div>
                 <div class="mt-2 d-flex justify-content-center">
                     <button class="btn btn-info text-white">Inserisci un articolo</button>
