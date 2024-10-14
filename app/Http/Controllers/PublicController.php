@@ -46,7 +46,7 @@ public function careersSubmit(Request $request){
                 break;
 
                 case 'writer':
-                    $user->is_admin =  NULL;
+                    $user->is_writer =  NULL;
                     break;
 
           

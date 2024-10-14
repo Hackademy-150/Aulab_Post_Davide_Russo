@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use App\Models\Tag;
 use App\Models\Category;
-use Nette\Schema\Schema;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 

@@ -9,6 +9,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use PhpParser\Node\Stmt\Foreach_;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
@@ -113,7 +114,7 @@ return view ('article.by-user' , compact('user' , 'articles'));
      */
     public function edit(Article $article)
     {
-        //
+        return view('article.edit' , compact('article'));
     }
 
     /**
@@ -121,7 +122,46 @@ return view ('article.by-user' , compact('user' , 'articles'));
      */
     public function update(Request $request, Article $article)
     {
-        //
+        $request->validate([
+            'title'=> 'required|min:3|unique:articles,title,'.$article->id ,
+            'subtitle'=> 'required|min:5',
+            'body'=> 'required|min:10',
+            'subtitle'=> 'required|min:5',
+            'image' => 'image',
+            'category'=> 'required',
+            'tags' => 'required',
+
+        ]);
+
+        $article->update([
+            'title'=> $request->title,
+            'subtitle'=> $request->subtitle,
+            'body'=> $request->body,
+            'category_id'=> $request->category,
+        ]);
+        if($request->image){
+            Storage::delete($article->image);
+            $article->update([
+                'image' => $request->file('image')->store('public/image'),
+            ]);
+        }
+        
+        $tags = explode(',' , $request->tags);
+
+        foreach ($tags as $i => $tag) {
+            $tags[$i] =trim($tag);
+        }
+
+$newTags = [];
+        foreach ($tags as $tag) {
+            $newTag = Tag::updateOrCreate(
+                ['name' => $tag],
+                ['name' => strtolower($tag)],
+            );
+            $newTags[] = $newTag->id;
+        }
+        return redirect(route('writer.dashboard'))->with('message' , 'Hai correttamente aggiornato l\'articolo scelto');
+        $article->tags->sync($newTag);
     }
 
     /**
@@ -129,6 +169,13 @@ return view ('article.by-user' , compact('user' , 'articles'));
      */
     public function destroy(Article $article)
     {
-        //
+        foreach ($article->tags as $tag) {
+            $article->tags()->detach($tag);
+        }
+
+        $article->delete();
+
+        return redirect(route('writer.dashboard'))->with('message' , 'Hai correttamente cancellato l\'articolo scelto');
+
     }
 }

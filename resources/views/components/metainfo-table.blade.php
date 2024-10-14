@@ -9,7 +9,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ($metaInfos as $metainfo)
+        @foreach ($metaInfos as $metaInfo)
         <tr>
             <th scope="row">{{ $metaInfo-> id}}</th>
             <td>{{ $metaInfo->name}}</td>
@@ -19,12 +19,12 @@
               <form action="{{ route('admin.editTag' , ['tag' => $metaInfo])}}" method="POST">
                 @csrf
                 @method('put')
-                <input type="text" name="name" placeholder="NUovo nome tag" class="form-control w-50 d-inline">
+                <input type="text" name="name" placeholder="Nuovo nome tag" class="form-control w-50 d-inline">
                 <button type="submit" class="btn btn-info">Aggiornami</button>
             </form>   
             </td>
             <td>
-                <form action="" method="">
+                <form action="{{ route('admin.deleteTag' , ['tag' => $metaInfo])}}" method="POST" method="">
                   @csrf
                   @method('delete')
                   <button type="submit" class="btn btn-danger">Aggiornami</button>
