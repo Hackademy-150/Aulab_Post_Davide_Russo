@@ -147,7 +147,9 @@ class ArticleController extends Controller
             'body'=> $request->body,
             'category_id'=> $request->category,
             'slug' => Str::slug($request->title),
+            'is_accepted' => null
         ]);
+
         if($request->image){
             Storage::delete($article->image);
             $article->update([

@@ -30,7 +30,7 @@
     <div class="container my-5">
         <div class="row justify-content-center">
             <div class="col-12">
-                <h2>Richieste per ruolo redattore</h2>
+                <h2>Articoli respinti</h2>
                 <x-writer-articles-table :articles="$rejectedArticles" />
             </div>
         </div>
