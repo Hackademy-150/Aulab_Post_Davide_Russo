@@ -38,8 +38,7 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" name="email" class="form-control" id="email" value="{{ old ('email') ?? Auth::user()->email }}">
+                        <input type="email" name="email" class="form-control" id="email" value="{{ old ('email') ?? Auth::user()->email }}" hidden>
                     </div>
                     <div class="mb-3">
                         <label for="message" class="form-label">Parlaci di te</label>

@@ -32,18 +32,18 @@
               </td>
               @else
               <td>
-                <form action="" method="">
+                <form action="{{route('admin.editCategory', ['category' => $metaInfo])}}" method="POST">
                   @csrf
                   @method('put')
-                  <input type="text" name="name" placeholder="NUovo nome categoria" class="form-control w-50 d-inline">
+                  <input type="text" name="name" placeholder="Nuovo nome categoria" class="form-control w-50 d-inline">
                   <button type="submit" class="btn btn-info">Aggiornami</button>
               </form>   
               </td>
               <td>
-                  <form action="" method="">
+                  <form action="{{route('admin.deleteCategory', ['category' => $metaInfo])}}" method="POST">
                     @csrf
                     @method('delete')
-                    <button type="submit" class="btn btn-danger">Aggiornami</button>
+                    <button type="submit" class="btn btn-danger">Cancellami</button>
                 </form>   
                 </td>
             @endif

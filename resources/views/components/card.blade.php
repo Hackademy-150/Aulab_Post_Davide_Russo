@@ -11,7 +11,7 @@
             @endforeach
         </p>   
         @endif
-        <span class="text-muted small fst-italic">tempo di lettura{{ $git  }} min</span>
+        <span class="text-muted small fst-italic">tempo di lettura{{ $readDuration  }} min</span>
         
         <a href="{{ $urlUser }}" class="small text-muted d-flex justify-content-center align-items-center">{{$user}}</a>
     </div>
